@@ -1,4 +1,4 @@
-# Docker image of SoftEther VPN Client
+# Docker image of SoftEther VPN Client (OpenWRT)
 
 Clonning the last development version of SoftEthern VPN Client and compiling it for creating a Docker image.
 
