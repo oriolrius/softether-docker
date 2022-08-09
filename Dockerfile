@@ -30,7 +30,8 @@ FROM arm64v8/alpine
 
 RUN apk add \
   openssl \
-  libsodium-dev
+  libsodium-dev \
+   readline
 
 WORKDIR /root
 COPY --from=builder /vpn/* /usr/
