@@ -1,5 +1,7 @@
-# syntax=docker/dockerfile:1
-FROM arm64v8/alpine AS builder
+FROM --platform=$BUILDPLATFORM alpine as builder
+
+ARG TARGETPLATFORM
+ARG USE_MUSL=YES
 
 RUN apk add \
   musl-dev \
@@ -14,9 +16,8 @@ RUN apk add \
   readline-dev \
   zlib-dev
 
-ARG USE_MUSL=YES
 WORKDIR /tmp
-RUN git clone --depth 1 https://github.com/SoftEtherVPN/SoftEtherVPN.git
+RUN git clone --depth 1 "https://github.com/SoftEtherVPN/SoftEtherVPN.git"
 
 WORKDIR /tmp/SoftEtherVPN
 RUN git submodule init && git submodule update
@@ -24,16 +25,29 @@ RUN ./configure
 RUN make -C build
 RUN make -C build install DESTDIR=/vpn
 
+# building final image
+FROM --platform=$BUILDPLATFORM alpine
+ARG TARGETPLATFORM
+ARG SOFTETHER_VERSION
+ARG SOFTETHER_REPOSITORY
+ARG MODE
+ARG BUILD_DATE
 
-###
-FROM arm64v8/alpine
+ENV MODE ${MODE}
+
+LABEL org.label-schema.build-date=${BUILD_DATE} \
+      org.label-schema.platform=${TARGETPLATFORM} \
+      org.label-schema.version=${SOFTETHER_VERSION} \
+      org.label-schema.repository=${SOFTETHER_REPOSITORY} \
+      org.label-schema.mode=${MODE} \
+      authors="Oriol Rius"
 
 RUN apk add \
-  openssl \
-  libsodium-dev \
-   readline
+    openssl \
+    libsodium-dev \
+    readline
 
 WORKDIR /root
 COPY --from=builder /vpn/* /usr/
 
-CMD ["/usr/local/libexec/softether/vpnclient/vpnclient", "execsvc"]
+CMD /usr/local/libexec/softether/${MODE}/${MODE} execsvc

@@ -1,12 +1,13 @@
-# Docker image of SoftEther VPN Client (OpenWRT)
+# Build docker images for SoftEtherVPN
 
-Clonning the last development version of SoftEthern VPN Client and compiling it for creating a Docker image.
+Platforms (architectures) generated: amd64 and arm64.
 
-This image uses 'aarch64' architecture, for running in Raspberry PI 3B+ and OpenWrt 21.02.0 r16279-5cc0535800.
+## Instructions
 
-Of course, docker daemon is required for running this image.
-
-docker-compose.yml - defines the runtime environment of docker
-config/            - configuration files for the service
-
-
+```
+git clone 
+cd softether-docker
+docker login
+chmod 755 build-and-push.sh
+./build-and-push.sh
+```
