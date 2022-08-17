@@ -1,7 +1,7 @@
 version: '2'
 services:
   softether-vpnclient:
-    image: oriolrius/softether-vpnclient:5.02.5180
+    image: "oriolrius/softether-vpnclient:5.02.5180"
     container_name: softether-vpnclient
     privileged: true
     network_mode: host
@@ -11,7 +11,7 @@ services:
       - ./config/lang.config:/usr/local/libexec/softether/vpnclient/lang.config
       - ./log:/usr/local/libexec/softether/vpnclient/client_log
   softether-vpnserver:
-    image: oriolrius/softether-vpnserver:5.02.5180
+    image: "oriolrius/softether-vpnserver:5.02.5180"
     container_name: softether-vpnserver
     privileged: true
     network_mode: host
