@@ -1,5 +1,7 @@
 #!/bin/sh
-# Run docker buildx an
+# Run docker buildx build
+PLATFORM="--platform linux/amd64,linux/arm64"
+
 for STATE in stable development
 do
   if [ "$STATE" = "stable" ];
@@ -13,7 +15,7 @@ do
     LATEST=false
   fi
 
-  #sudo docker buildx prune -f
+  sudo docker buildx prune -f
 
   for MODE in vpnclient vpnserver
   do
@@ -24,13 +26,14 @@ do
     fi
 
     sudo docker buildx build \
-      --platform linux/amd64,linux/arm64 \
+      ${PLATFORM} \
       --build-arg SOFTETHER_VERSION="${SOFTETHER_VERSION}" \
       --build-arg SOFTETHER_REPOSITORY="${SOFTETHER_REPOSITORY}" \
       --build-arg MODE="${MODE}" \
+      --build-arg STATE="${STATE}" \
       --build-arg BUILD_DATE="$(date +"%Y-%m-%dT%H:%M:%SZ")" \
       --tag oriolrius/softether-${MODE}:${SOFTETHER_VERSION} \
-       \
+      ${LATEST_TAG} \
       --push \
       .
   done

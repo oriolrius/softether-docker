@@ -2,6 +2,11 @@ FROM --platform=$BUILDPLATFORM alpine as builder
 
 ARG TARGETPLATFORM
 ARG USE_MUSL=YES
+ARG SOFTETHER_REPOSITORY
+ARG STATE
+
+ENV SOFTETHER_REPOSITORY ${SOFTETHER_REPOSITORY}
+ENV STATE ${STATE}
 
 RUN apk add \
   musl-dev \
@@ -17,13 +22,26 @@ RUN apk add \
   zlib-dev
 
 WORKDIR /tmp
-RUN git clone --depth 1 "https://github.com/SoftEtherVPN/SoftEtherVPN.git"
+RUN mkdir -p /tmp/SoftEtherVPN
+RUN git clone --depth 1 ${SOFTETHER_REPOSITORY} /tmp/SoftEtherVPN
 
 WORKDIR /tmp/SoftEtherVPN
-RUN git submodule init && git submodule update
-RUN ./configure
-RUN make -C build
-RUN make -C build install DESTDIR=/vpn
+
+RUN case "$STATE" in \
+  "stable") \
+    ./configure &&\
+    make &&\
+    mkdir -p /vpn/usr/local/libexec/softether &&\
+    cp -r bin/* /vpn/usr/local/libexec/softether \
+  ;; \
+  *) \
+    git submodule init && \
+    git submodule update && \
+    ./configure && \
+    make -C build && \
+    make -C build install DESTDIR=/vpn \
+  ;; \
+  esac
 
 # building final image
 FROM --platform=$BUILDPLATFORM alpine
