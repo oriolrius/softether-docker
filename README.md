@@ -70,7 +70,9 @@ docker buildx use mybuilder
 docker buildx inspect --bootstrap
 ```
 
-## Instructions
+## Instructions for building images
+
+Followoing next steps you can build the docker images.
 
 ```
 git clone ssh://git@git.oriolrius.cat:222/oriolrius/softether-docker.git
