@@ -6,6 +6,7 @@ https://hub.docker.com/repositories/oriolrius
 Platforms (architectures) generated: amd64 and arm64.
 
 - Docker Hub repository: https://hub.docker.com/repositories
+- Public git repository: https://github.com/oriolrius/softether-docker
 - Private git repository: https://git.oriolrius.cat/oriolrius/softether-docker
 
 
