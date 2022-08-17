@@ -7,8 +7,6 @@ services:
     network_mode: host
     restart: unless-stopped
     volumes:
-      #- /etc/localtime:/etc/localtime:ro
-      #- /etc/timezone:/etc/timezone:ro
       - ./config/vpn_client.config:/usr/local/libexec/softether/vpnclient/vpn_client.config
       - ./config/lang.config:/usr/local/libexec/softether/vpnclient/lang.config
       - ./log:/usr/local/libexec/softether/vpnclient/client_log
