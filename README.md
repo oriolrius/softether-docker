@@ -80,6 +80,11 @@ chmod 755 build-and-push.sh
 ./build-and-push.sh
 ```
 
+## Before running the client or server
+
+... go to the config/ directory and rename the files *.config.sample to *.config, or create your own config files.
+
+My recommendation is to use the sample files and then modify the configurations using GUI managers.
 
 ## Run the VPN client
 
