@@ -40,7 +40,7 @@ mkdir -p ~/.docker/cli-plugins
 # download the latest version available for your host architecture from:
 # https://github.com/docker/buildx/releases
 # in my case:
-wget https://github.com/docker/buildx/releases/download/v0.9.0/buildx-v0.9.0.linux-amd64 -o ~/.docker/cli-plugins/docker-buildx
+wget https://github.com/docker/buildx/releases/download/v0.9.0/buildx-v0.9.0.linux-amd64 -O ~/.docker/cli-plugins/docker-buildx
 # giving execution permissions
 chmod 755 ~/.docker/cli-plugins/docker-buildx
 
